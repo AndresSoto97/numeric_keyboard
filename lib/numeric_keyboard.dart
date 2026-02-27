@@ -26,16 +26,20 @@ class NumericKeyboard extends StatefulWidget {
   /// Main axis alignment [default = MainAxisAlignment.spaceEvenly]
   final MainAxisAlignment mainAxisAlignment;
 
-  NumericKeyboard(
-      {Key? key,
-      required this.onKeyboardTap,
-      this.textColor = Colors.black,
-      this.rightButtonFn,
-      this.rightIcon,
-      this.leftButtonFn,
-      this.leftIcon,
-      this.mainAxisAlignment = MainAxisAlignment.spaceEvenly})
-      : super(key: key);
+  /// Button margin [default = EdgeInsets.all(25)]
+  final EdgeInsets buttonMargin;
+
+  NumericKeyboard({
+    Key? key,
+    required this.onKeyboardTap,
+    this.textColor = Colors.black,
+    this.rightButtonFn,
+    this.rightIcon,
+    this.leftButtonFn,
+    this.leftIcon,
+    this.mainAxisAlignment = MainAxisAlignment.spaceEvenly,
+    this.buttonMargin = const EdgeInsets.all(25),
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -51,7 +55,7 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
       alignment: Alignment.center,
       child: Column(
         children: <Widget>[
-          ButtonBar(
+          OverflowBar(
             alignment: widget.mainAxisAlignment,
             children: <Widget>[
               _calcButton('1'),
@@ -59,7 +63,7 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
               _calcButton('3'),
             ],
           ),
-          ButtonBar(
+          OverflowBar(
             alignment: widget.mainAxisAlignment,
             children: <Widget>[
               _calcButton('4'),
@@ -67,7 +71,7 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
               _calcButton('6'),
             ],
           ),
-          ButtonBar(
+          OverflowBar(
             alignment: widget.mainAxisAlignment,
             children: <Widget>[
               _calcButton('7'),
@@ -75,13 +79,14 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
               _calcButton('9'),
             ],
           ),
-          ButtonBar(
+          OverflowBar(
             alignment: widget.mainAxisAlignment,
             children: <Widget>[
               InkWell(
                   borderRadius: BorderRadius.circular(45),
                   onTap: widget.leftButtonFn,
                   child: Container(
+                      margin: widget.buttonMargin,
                       alignment: Alignment.center,
                       width: 50,
                       height: 50,
@@ -91,6 +96,7 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
                   borderRadius: BorderRadius.circular(45),
                   onTap: widget.rightButtonFn,
                   child: Container(
+                      margin: widget.buttonMargin,
                       alignment: Alignment.center,
                       width: 50,
                       height: 50,
@@ -109,15 +115,13 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
           widget.onKeyboardTap(value);
         },
         child: Container(
+          margin: widget.buttonMargin,
           alignment: Alignment.center,
           width: 50,
           height: 50,
           child: Text(
             value,
-            style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: widget.textColor),
+            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: widget.textColor),
           ),
         ));
   }
